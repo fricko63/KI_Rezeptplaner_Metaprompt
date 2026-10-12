@@ -1,0 +1,398 @@
+<title>Rezept – Lomo Saltado (Peru)</title>
+<!--
+  VORLAGE FÜR REZEPTSEITEN – Poster-Design
+  Jede Rezeptseite ist zugleich ein Poster zum Aufhängen: edel, verspielt, Handschrift-Optik.
+  Aufbau beibehalten, damit die Sammlung einheitlich aussieht:
+    Kopf mit Ländermuster, Kicker-Zeile (Land · Mahlzeit · Region), Flagge oben rechts, Titel in Handschrift,
+    Untertitel, Chips (Portionen, aktive Zeit, Gesamtzeit, Geräte) → Musterband → Nährwertleiste pro Portion →
+    dunkle Kreidetafel mit Zutaten (Liste mit Emoji, Menge + Name) und Zubereitung (nummerierte Schritte mit Zeit) →
+    drei Notizzettel (Original & Alternative, Schärfe, Tipp bzw. „Für morgen“) → Fußzeile mit Musterband
+    und „Guten Appetit“ in der Landessprache.
+  Pro Rezept anpassen:
+    - die Farben in :root (--primary, --accent, --deep, --paper, --card); --accent muss auf der schwarzen Tafel gut lesbar sein
+    - das Muster im Kopf (<pattern id="muster">), typisch für Land oder Region; es erscheint auch in den Musterbändern
+    - die Titelschrift: eine handschriftliche oder handgeletterte Google-Font passend zum Land
+      (--font-title, --title-weight, --title-size und der Font-Link). Kalam, Caveat und Cormorant Garamond bleiben immer gleich.
+    - die Flagge (SVG)
+    - alle Inhalte und das „Guten Appetit“ in der Landessprache
+  Nicht auf die Seite:
+    - keine Markierungen oder Kommentare an den Zutaten (kein „Vorrat“, „Einkauf“, „ergänzt“)
+    - keine Hinweise auf Schätzungen oder Quellen
+  Portionen:
+    - Zutatenmengen für alle, die mitessen, und für alle Tage, für die gekocht wird (dieses Beispiel: 2 Portionen)
+    - Chip und Zeile unter „Zutaten“ nennen die Portionen bzw. Personen; bei unterschiedlichen Portionsfaktoren
+      z. B. „für 4 Personen · Kinder je ¾ Portion“
+    - Nährwerte immer pro Standardportion
+    - wird für mehrere Tage gekocht, ist der dritte Notizzettel „Für morgen“ (Lagern und Aufwärmen)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Kalam:wght@400;700&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Länderpalette: Peru */
+    --primary: #a3202a;
+    --accent: #f0b23e;
+    --deep: #2f4b3a;
+    --paper: #f4ece0;
+    --card: #fffaf2;
+    --ink: #2a2420;
+    --deep-ink: #2f4b3a;
+    --on-primary: #fffaf2;
+    --on-deep: #fffaf2;
+    --scrim: rgba(0,0,0,.30);
+    --band-bg: #a3202a;
+    --slate: #171513;
+    --chalk: #f2ede3;
+    --chalk-dim: #bdb4a5;
+    --wall: #3a3530;
+    --font-title: "Kaushan Script", "Brush Script MT", cursive;
+    --title-weight: 400;
+    --title-size: 4.6rem;
+    --font-hand: "Kalam", "Segoe Print", "Bradley Hand", cursive;
+    --font-note: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    --font-serif: "Cormorant Garamond", Georgia, serif;
+  }
+
+  /* Layout: Poster an der Wand. Farbiger Kopf mit Ländermuster, Musterband, Nährwertleiste,
+     dunkle Kreidetafel mit Zutaten (links) und Zubereitung (rechts), Notizzettel, Fußzeile mit „Guten Appetit“. */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding-block: 28px;
+    padding-inline: 16px;
+    background: var(--wall);
+    color: var(--ink);
+    font-family: var(--font-hand);
+    line-height: 1.45;
+  }
+  .poster {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 24px 60px rgba(0,0,0,.45);
+    overflow: hidden;
+  }
+
+  /* Kopf */
+  .hero {
+    position: relative;
+    background: var(--primary);
+    color: var(--on-primary);
+    padding: 34px 40px 30px;
+    overflow: hidden;
+  }
+  .hero svg.pattern { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .38; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(100deg, var(--scrim) 0%, var(--scrim) 35%, transparent 85%);
+  }
+  .hero .content { position: relative; z-index: 1; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .kicker {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    padding-top: 6px;
+  }
+  .flag {
+    width: 84px; height: 56px; flex: none;
+    border: 3px solid var(--on-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,.35);
+    transform: rotate(3deg);
+  }
+  h1 {
+    font-family: var(--font-title);
+    font-weight: var(--title-weight);
+    font-size: clamp(2.6rem, 8vw, var(--title-size));
+    line-height: 1.02;
+    margin: .3em 0 .2em;
+    text-wrap: balance;
+    text-shadow: 0 2px 10px rgba(0,0,0,.25);
+  }
+  .sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.28rem;
+    line-height: 1.35;
+    margin: 0 0 18px;
+    max-width: 36em;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .chip {
+    font-family: var(--font-note);
+    font-size: 1.3rem;
+    line-height: 1;
+    padding: 6px 14px 7px;
+    border: 1.5px dashed var(--on-primary);
+    border-radius: 999px;
+    background: rgba(0,0,0,.14);
+  }
+
+  /* Musterband */
+  .band { display: block; width: 100%; height: 48px; background: var(--band-bg); }
+
+  /* Nährwerte */
+  .nutri {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--deep);
+    color: var(--on-deep);
+    text-align: center;
+  }
+  .nutri div { padding: 12px 6px 14px; border-right: 1px dashed rgba(255,255,255,.28); }
+  .nutri div:last-child { border-right: 0; }
+  .nutri strong {
+    display: block;
+    font-family: var(--font-note);
+    font-size: 2.1rem; line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+  }
+  .nutri span { font-family: var(--font-serif); font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+
+  /* Kreidetafel */
+  .board {
+    position: relative;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,255,255,.045), transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(255,255,255,.035), transparent 50%),
+      var(--slate);
+    color: var(--chalk);
+    padding: 34px 40px 30px;
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr);
+    gap: 40px;
+  }
+  .board::before {
+    content: ""; position: absolute; inset: 12px;
+    border: 1px solid var(--accent);
+    outline: 1px solid var(--accent); outline-offset: 4px;
+    opacity: .55; pointer-events: none;
+  }
+  .board > div { min-width: 0; position: relative; }
+  .board > div + div { border-left: 1px dashed rgba(255,255,255,.22); padding-left: 40px; }
+  .board h2 {
+    font-family: var(--font-title);
+    font-weight: var(--title-weight);
+    font-size: 2.6rem; line-height: 1;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .portion { font-family: var(--font-note); font-size: 1.35rem; color: var(--chalk-dim); margin: 0 0 14px; }
+
+  ul.ingredients { list-style: none; margin: 0; padding: 0; }
+  ul.ingredients li {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px dotted rgba(255,255,255,.22);
+  }
+  ul.ingredients li:last-child { border-bottom: 0; }
+  .pic { font-size: 24px; line-height: 1; text-align: center; }
+  .amount { font-family: var(--font-note); font-weight: 700; font-size: 1.35rem; color: var(--accent); margin-right: 6px; }
+  .name { font-size: 1.02rem; overflow-wrap: break-word; hyphens: auto; }
+
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  ol.steps li { counter-increment: s; position: relative; padding: 0 0 18px 58px; }
+  ol.steps li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: -4px;
+    width: 42px; height: 42px;
+    display: grid; place-items: center;
+    font-family: var(--font-note); font-weight: 700; font-size: 1.7rem;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 50% 46% 52% 48% / 48% 52% 46% 50%;
+  }
+  .step-title { font-weight: 700; font-size: 1.12rem; }
+  .time { font-family: var(--font-note); font-size: 1.2rem; color: var(--chalk-dim); }
+  .step-text { display: block; font-size: 1.02rem; color: var(--chalk); }
+
+  /* Notizzettel */
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    padding: 34px 40px 36px;
+    background: var(--paper);
+  }
+  .note {
+    background: var(--card);
+    padding: 16px 18px 14px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.08), 0 8px 18px rgba(0,0,0,.10);
+    border-top: 6px solid var(--accent);
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .note:nth-child(1) { transform: rotate(-1deg); }
+  .note:nth-child(2) { transform: rotate(.8deg); }
+  .note:nth-child(3) { transform: rotate(-.5deg); }
+  .note h3 {
+    font-family: var(--font-note); font-weight: 700;
+    font-size: 1.6rem; line-height: 1.1;
+    color: var(--deep-ink);
+    margin: 0 0 6px;
+  }
+  .note ul { margin: 0; padding-left: 18px; }
+  .note li { margin-bottom: 5px; }
+  .note li::marker { color: var(--primary); }
+
+  footer {
+    position: relative;
+    background: var(--deep);
+    color: var(--on-deep);
+    text-align: center;
+  }
+  footer .inner { padding: 22px 16px 24px; }
+  footer .bon {
+    font-family: var(--font-title); font-weight: var(--title-weight);
+    font-size: clamp(2.4rem, 7vw, 3.6rem); line-height: 1.1;
+  }
+  footer .meta { font-family: var(--font-serif); font-style: italic; font-size: 1.05rem; opacity: .85; margin-top: 4px; }
+
+  @media (max-width: 720px) {
+    body { padding-block: 16px; }
+    .hero { padding: 26px 20px 22px; }
+    .flag { width: 62px; height: 42px; }
+    .kicker { font-size: .82rem; letter-spacing: .16em; }
+    .sub { font-size: 1.12rem; }
+    .chip { font-size: 1.12rem; }
+    .nutri { grid-template-columns: repeat(6, 1fr); }
+    .nutri div { grid-column: span 2; padding: 10px 4px; }
+    .nutri div:nth-child(3) { border-right: 0; }
+    .nutri div:nth-child(n+4) { grid-column: span 3; border-top: 1px dashed rgba(255,255,255,.28); }
+    .nutri strong { font-size: 1.75rem; }
+    .nutri span { font-size: .74rem; letter-spacing: .03em; }
+    .board { grid-template-columns: minmax(0, 1fr); padding: 30px 24px 22px; gap: 28px; }
+    .board > div + div { border-left: 0; padding-left: 0; border-top: 1px dashed rgba(255,255,255,.22); padding-top: 24px; }
+    .board h2 { font-size: 2.2rem; }
+    .notes { grid-template-columns: minmax(0, 1fr); padding: 26px 20px 28px; gap: 18px; }
+  }
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: #fff; padding: 0; }
+    .poster { max-width: none; box-shadow: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    ol.steps li, .note, ul.ingredients li { break-inside: avoid; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .note { transition: transform .2s ease; }
+    .note:hover { transform: rotate(0) translateY(-2px); }
+  }
+</style>
+<main class="poster">
+
+  <header class="hero">
+    <svg class="pattern" aria-hidden="true">
+      <defs>
+        <!-- Länder-Muster: Anden-Stufenkreuz (Chakana) -->
+        <pattern id="muster" width="48" height="48" patternUnits="userSpaceOnUse">
+          <polygon points="24,6 30,6 30,12 36,12 36,18 42,18 42,30 36,30 36,36 30,36 30,42 18,42 18,36 12,36 12,30 6,30 6,18 12,18 12,12 18,12 18,6" style="fill: var(--accent)"/>
+          <rect x="18" y="18" width="12" height="12" style="fill: var(--deep)"/>
+          <rect x="21" y="21" width="6" height="6" style="fill: #fffaf2"/>
+          <path d="M0 0 L4 4 L0 8 M48 40 L44 44 L48 48" fill="none" stroke="#fffaf2" stroke-width="2"/>
+          <rect x="0" y="22" width="3" height="4" style="fill: #fffaf2"/><rect x="45" y="22" width="3" height="4" style="fill: #fffaf2"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#muster)"/>
+    </svg>
+    <div class="content">
+      <div class="hero-top">
+        <div class="kicker">Peru · Abendessen · Chifa-Küche</div>
+        <svg class="flag" viewBox="0 0 90 60" role="img" aria-label="Flagge Peru">
+          <rect width="90" height="60" fill="#fff"/><rect width="30" height="60" fill="#D91023"/><rect x="60" width="30" height="60" fill="#D91023"/>
+        </svg>
+      </div>
+      <h1>Lomo Saltado</h1>
+      <p class="sub">Scharf angebratene Rindfleischstreifen mit roter Zwiebel, Tomate und Paprika in Soja-Essig-Soße, auf knusprigen Pommes aus der Heißluftfritteuse.</p>
+      <div class="chips">
+        <span class="chip">2 Portionen</span>
+        <span class="chip">aktiv ca. 30 Min</span>
+        <span class="chip">gesamt ca. 40 Min</span>
+        <span class="chip">Heißluftfritteuse · Wok</span>
+      </div>
+    </div>
+  </header>
+
+  <svg class="band" aria-hidden="true"><rect width="100%" height="100%" fill="url(#muster)"/></svg>
+
+  <div class="nutri" aria-label="Nährwerte pro Portion">
+    <div><strong>630</strong><span>kcal</span></div>
+    <div><strong>54 g</strong><span>Protein</span></div>
+    <div><strong>11 g</strong><span>Ballaststoffe</span></div>
+    <div><strong>55 g</strong><span>Kohlenhydrate</span></div>
+    <div><strong>21 g</strong><span>Fett</span></div>
+  </div>
+
+  <section class="board">
+    <div>
+      <h2>Zutaten</h2>
+      <p class="portion">für 2 Portionen</p>
+      <ul class="ingredients">
+        <li><span class="pic">🥩</span><span><span class="amount">400 g</span><span class="name">Rinderhüfte oder Rumpsteak</span></span></li>
+        <li><span class="pic">🥔</span><span><span class="amount">500 g</span><span class="name">festkochende Kartoffeln</span></span></li>
+        <li><span class="pic">🧅</span><span><span class="amount">2</span><span class="name">rote Zwiebeln</span></span></li>
+        <li><span class="pic">🍅</span><span><span class="amount">3 mittelgroße</span><span class="name">Tomaten</span></span></li>
+        <li><span class="pic">🫑</span><span><span class="amount">2</span><span class="name">Paprika, idealerweise gelb</span></span></li>
+        <li><span class="pic">🧄</span><span><span class="amount">3 Zehen</span><span class="name">Knoblauch</span></span></li>
+        <li><span class="pic">🌿</span><span><span class="amount">½ Bund</span><span class="name">frischer Koriander</span></span></li>
+        <li><span class="pic">🥢</span><span><span class="amount">4 EL</span><span class="name">Sojasoße</span></span></li>
+        <li><span class="pic">🍶</span><span><span class="amount">2 EL</span><span class="name">Rotwein- oder Apfelessig</span></span></li>
+        <li><span class="pic">🫙</span><span><span class="amount">½ TL</span><span class="name">Kreuzkümmel</span></span></li>
+        <li><span class="pic">🌶️</span><span><span class="amount">1</span><span class="name">frische Chili oder Chilisoße nach Geschmack</span></span></li>
+        <li><span class="pic">🌼</span><span><span class="amount">2½ EL</span><span class="name">Rapsöl</span></span></li>
+        <li><span class="pic">🧂</span><span><span class="amount">nach Geschmack</span><span class="name">Salz, Pfeffer</span></span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Zubereitung</h2>
+      <p class="portion">Schritt für Schritt</p>
+      <ol class="steps">
+        <li><span class="step-title">Vorbereiten</span> <span class="time">· 10 Min</span><span class="step-text">Kartoffeln schälen, in Stifte schneiden, in kaltem Wasser waschen und sehr gut abtrocknen. Zwiebel und Tomaten (ohne wässriges Kerngehäuse) in Spalten, Paprika in Streifen schneiden, Knoblauch fein hacken. Rindfleisch gegen die Faser in 1,5–2 cm dicke Streifen schneiden.</span></li>
+        <li><span class="step-title">Pommes backen</span> <span class="time">· 15–20 Min</span><span class="step-text">Kartoffelstifte mit 1 EL Öl und Salz vermengen. In der Heißluftfritteuse bei 200 °C goldbraun und knusprig backen, zwischendurch schütteln.</span></li>
+        <li><span class="step-title">Fleisch scharf anbraten</span> <span class="time">· 2–4 Min</span><span class="step-text">Wok ohne Öl extrem heiß werden lassen. Je ½ EL Öl und das Fleisch in zwei Portionen hineingeben, ohne es zu Beginn zu bewegen. Salzen, pfeffern und herausnehmen.</span></li>
+        <li><span class="step-title">Gemüse pfannenrühren</span> <span class="time">· 2 Min</span><span class="step-text">Zwiebel, Paprika und Knoblauch mit einem Tropfen Öl in den Wok geben und braten, bis sie gerade noch Biss haben. Tomatenspalten nur ganz kurz mitschwenken.</span></li>
+        <li><span class="step-title">Zusammenführen</span> <span class="time">· 30 Sek</span><span class="step-text">Fleisch samt Saft zurück in den Wok geben, mit Sojasoße und Essig ablöschen. Kreuzkümmel und Chili nach Wunsch unterrühren und gut durchschwenken.</span></li>
+        <li><span class="step-title">Anrichten</span><span class="step-text">Pommes kurz im Wok untermischen oder das Fleisch-Gemüse direkt auf den Pommes anrichten. Mit grob gehacktem Koriander bestreuen und sofort servieren.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="notes">
+    <div class="note">
+      <h3>Original &amp; Alternative</h3>
+      <ul>
+        <li>In Peru würzt man mit Ají amarillo (gelbe Chilipaste); die gelbe Paprika und etwas Chilisoße kommen dem nahe</li>
+        <li>Die Pommes werden traditionell frittiert, die Heißluftfritteuse spart viel Fett</li>
+        <li>Oft gibt es zusätzlich Reis dazu, das wären ca. 250 kcal mehr pro Portion</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>Schärfe</h3>
+      <ul>
+        <li>Chili erst im letzten Schritt in den Wok</li>
+        <li>Wer es mild mag, nimmt seine Portion vorher heraus</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>Tipp</h3>
+      <ul>
+        <li>Der Wok muss wirklich rauchend heiß sein, sonst kocht das Fleisch im eigenen Saft</li>
+        <li>Kartoffeln gut abtrocknen, nur dann werden sie knusprig</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+  <svg class="band" aria-hidden="true"><rect width="100%" height="100%" fill="url(#muster)"/></svg>
+    <div class="inner">
+      <div class="bon">¡Buen provecho!</div>
+      <div class="meta">„Guten Appetit“ auf Spanisch (Peru)</div>
+    </div>
+  </footer>
+
+</main>
